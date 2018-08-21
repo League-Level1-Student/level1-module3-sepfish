@@ -29,6 +29,8 @@ public class Jeopardy implements ActionListener {
 	private JButton firstButton;
 	private JButton secondButton;
 	private JButton thirdButton, fourthButton;
+	private JButton fifthButton;
+	AudioClip sound;
 
 	private JPanel quizPanel;
 	int score = 0;
@@ -45,31 +47,43 @@ public class Jeopardy implements ActionListener {
 		frame.setLayout(new BorderLayout());
 
 		// 1. Make the frame show up
-
+			frame.setVisible(true);
 		// 2. Give your frame a title
-
+			frame.setTitle("Backwards JEOPARDY!!!");
 		// 3. Create a JPanel variable to hold the header using the createHeader method
-
+			JPanel header;
+			header = createHeader("Random");
 		// 4. Add the header component to the quizPanel
-
+			quizPanel.add(header);
 		// 5. Add the quizPanel to the frame
-
+			frame.add(quizPanel);
 		// 6. Use the createButton method to set the value of firstButton
-
+			firstButton = createButton("200");
 		// 7. Add the firstButton to the quizPanel
-
+			quizPanel.add(firstButton);
 		// 8. Write the code inside the createButton() method below. Check that your
 		// game looks like Figure 1 in the Jeopardy Handout - http://bit.ly/1bvnvd4.
-
+			//ok
 		// 9. Use the secondButton variable to hold a button using the createButton
 		// method
-
+			secondButton = createButton("400");
 		// 10. Add the secondButton to the quizPanel
-
+			quizPanel.add(secondButton);
 		// 11. Add action listeners to the buttons (2 lines of code)
-
+			firstButton.addActionListener(this);
+			secondButton.addActionListener(this);
 		// 12. Fill in the actionPerformed() method below
-
+			//ok
+			thirdButton = createButton("600");
+			quizPanel.add(thirdButton);
+			thirdButton.addActionListener(this);
+			fourthButton = createButton("800");
+			quizPanel.add(fourthButton);
+			fourthButton.addActionListener(this);
+			fifthButton = createButton("1000");
+			quizPanel.add(fifthButton);
+			fifthButton.addActionListener(this);
+			
 		frame.pack();
 		quizPanel.setLayout(new GridLayout(buttonCount + 1, 3));
 		frame.add(makeScorePanel(), BorderLayout.NORTH);
@@ -89,64 +103,76 @@ public class Jeopardy implements ActionListener {
 
 	private JButton createButton(String dollarAmount) {
 		// Create a new JButton
-
+			JButton button = new JButton();
 		// Set the text of the button to the dollarAmount
-
+			button.setText("$" + dollarAmount);
 		// Increment the buttonCount (this should make the layout vertical)
-
+			buttonCount++;
 		// Return your new button instead of the temporary button
-
-		return new JButton("temporary button");
+		return button;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
 		// Remove this temporary message:
-		JOptionPane.showMessageDialog(null, "pressed " + ((JButton) arg0.getSource()).getText() + " button");
 
 		// Use the method that plays the jeopardy theme music.
-
+		playJeopardyTheme();
+		
 		JButton buttonPressed = (JButton) arg0.getSource();
 		// If the buttonPressed was the firstButton
-
+		if (buttonPressed == firstButton) {
 		// Call the askQuestion() method
-
+			askQuestion("When was the first pencil invented?", "1564", 200);
 		// Fill in the askQuestion() method. When you play the game, the score should
 		// change.
-
+		} else
 		// Or if the buttonPressed was the secondButton
-
+		if (buttonPressed == secondButton) {
 		// Call the askQuestion() method with a harder question
+			askQuestion("What is the only color that isn't in the rainbow?", "glitterbeige", 400);
+		} else
+		if (buttonPressed == thirdButton) {
+			askQuestion("Which side should you pick in Fire Emblem Fates?", "Hoshido", 600);
+		} else
+		if (buttonPressed == fourthButton) {
+			askQuestion("When is Glen's birthday? Enter MM/DD", "05/20", 800);
+		} else {
+			askQuestion("Is the answer to this question no?", "maybe", 1000);
+		}
 
 		// Clear the button text (set the button text to nothing)
-
+		buttonPressed.setText(null);
 	}
 
 	private void askQuestion(String question, String correctAnswer, int prizeMoney) {
 		// Remove this temporary message
-		JOptionPane.showMessageDialog(null, "this is where the question will be asked");
 		// Use a pop up to ask the user the question
-
+		String hmm = JOptionPane.showInputDialog(question);
+		sound.stop();
 		// If the answer is correct
-
+		if (hmm.equalsIgnoreCase(correctAnswer)) {
 		// Increase the score by the prizeMoney
-
+			score = score += prizeMoney;
 		// Call the updateScore() method
-
+			updateScore();
 		// Pop up a message to tell the user they were correct
-
+			JOptionPane.showMessageDialog(null, "CORRECT");
+		}
 		// Otherwise
-
+		else {
 		// Decrement the score by the prizeMoney
-
+			score = score -= prizeMoney;
 		// Pop up a message to tell the user the correct answer
-
+			JOptionPane.showMessageDialog(null, "INCORRECT. The correct answer was: " + correctAnswer);
 		// Call the updateScore() method
+			updateScore();
+		}
 
 	}
 
 	public void playJeopardyTheme() {
 		try {
-			AudioClip sound = JApplet.newAudioClip(getClass().getResource("jeopardy.wav"));
+			sound = JApplet.newAudioClip(getClass().getResource("jeopardy.wav"));
 			sound.play();
 			Thread.sleep(3400);
 		} catch (Exception ex) {
