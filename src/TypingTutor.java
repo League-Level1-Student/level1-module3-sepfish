@@ -25,6 +25,8 @@ public class TypingTutor {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Type or DIE");
-		
+		label.setText(currentLetter);
+		label.setFont(label.getFont().deriveFont(28.0f));
+		label.setHorizontalAlignment(JLabel.CENTER);
 	}
 }
