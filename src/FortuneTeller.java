@@ -23,19 +23,24 @@ public class FortuneTeller extends JPanel implements Runnable, MouseListener {
 
     JFrame frame = new JFrame();
 
-    int frameWidth = 500;
-    int frameHeight = 400;
+    int frameWidth = 250;
+    int frameHeight = 250;
+    Random rand = new Random();
+    int random = rand.nextInt(250);
 
     FortuneTeller() throws Exception {
    	 // 1. Choose an image for your fortune teller and put it in your default package
    	 fortuneTellerImage = ImageIO.read(getClass().getResource("fortune teller.png"));
    	 // 2. Adjust the frameWidth and frameHeight variables to fit your image nicely (doesn’t need a new line of code)
    	 // 4. add a mouse listener to the frame
+   	 frame.addMouseListener(this);
 
     }
 
     static void begin() {
    	 // 3. Welcome the user. Give them a hint for the secret location.
+    		JOptionPane.showMessageDialog(null, "ODIN DARK WELCOMES YOU TO HIS DARK FORTUNE TELLING!\nUnder the guise of this DARK FORTUNETELLER, I will tell your DARK FORTUNE!!");
+    		JOptionPane.showMessageDialog(null, "I'm also, uh, supposed to give you a hint for the secret location.\n...oh.\nMy apologies, my DARK SEEKER, but the identity of the SECRET LOCATION changes every time you employ my DARK FORTUNETELLING!\nI guess I should probably tell you that the x and y locations will always be the same number.");
 
     }
 
@@ -44,23 +49,35 @@ public class FortuneTeller extends JPanel implements Runnable, MouseListener {
    	 int mouseX = e.getX();
    	 int mouseY = e.getY();
    	 // 5. Print the mouseX variable
-
+   	 System.out.println("X: " + mouseX + " Y: " + mouseY);
    	 // 6. Add the mouseY variable to the previous line so that it prints out too (no new line)
    	 // 7. Adjust your secret location co-ordinates here:
-   	 int secretLocationX = 0;
-   	 int secretLocationY = 0;
+   	 int secretLocationX = random;
+   	 int secretLocationY = random;
    	 /** If the mouse co-ordinates and secret location are close, we'll let them ask a question. */
    	 if (areClose(mouseX, secretLocationX) && areClose(mouseY, secretLocationY)) {
    		 // 8. Get the user to enter a question for the fortune teller
-
+   		 String question = JOptionPane.showInputDialog("Approach, my DARK SEEKER, and ask. A yes-or-no question, please...");
    		 // 9. Find a spooky sound and put it in your default package (freesound.org)
-   		 // AudioClip sound = JApplet.newAudioClip(getClass().getResource("creepy-noise.wav"));
+   		 AudioClip sound = JApplet.newAudioClip(getClass().getResource("creepy-noise.wav"));
    		 // 10. Play the sound
-
+   		 	sound.play();
    		 // 11. Use the pause() method below to wait until your music has finished
-
+   		 	pause(3);
    		 // 12. Insert your completed Magic 8 ball recipe (http://bit.ly/Zdrf6d) here
-
+   		 Random rand = new Random();
+ 		int hmm = rand.nextInt(4);
+ 		if (hmm == 0) {
+ 			JOptionPane.showMessageDialog(null, "THE GODS HAVE SPOKEN...\nThey have told me, ODIN DARK, that the answer to your DARK INQUIRY is YES!");
+ 		} else
+ 		if (hmm == 1) {
+ 			JOptionPane.showMessageDialog(null, "THE GODS HAVE SPOKEN...\nThey have told me, ODIN DARK, that the answer to your DARK INQUIRY is NO!");
+ 		} else
+ 		if (hmm == 2) {
+ 		JOptionPane.showMessageDialog(null, "THE GODS HAVE...\nUh, actually, they have not spoken.\nMy advice to you, my DARK SEEKER, is to consult the all-knowing seer, GOOGLE!");
+ 		} else {
+ 		JOptionPane.showMessageDialog(null, "Uh... I'm not getting any signs from the gods, DARK or otherwise.\nMy advice to you, my DARK SEEKER, is to just try again.");
+ 		}
    	 }
 
     }
